@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  php-apache:
+    image: ousi20/mijnwebsite:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - /var/www/html
+
+  db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: backend
+      MYSQL_USER: root
+      MYSQL_PASSWORD: admin123
