@@ -19,7 +19,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           username: ousi20 
-          password: 
+          password: TesterBester123-
 
       - name: Build and push Docker image
         run: |
