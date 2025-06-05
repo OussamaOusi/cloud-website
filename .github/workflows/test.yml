@@ -2,7 +2,7 @@ name: Upload coverage to Codecov
 
 on:
   push:
-    branches: [main]  # Trigger bij push naar main
+    branches: [main]
 
 jobs:
   test:
@@ -27,3 +27,7 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          flags: unittests
+          name: codecov-report
+          fail_ci_if_error: true
