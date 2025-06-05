@@ -1,36 +1,29 @@
-name: push
+name: Upload coverage to Codecov
 
 on:
   push:
-    branches:
-    - main
-    - release/*
+    branches: [main]  # Trigger bij push naar main
+
 jobs:
   test:
-    name: Test on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        node_version: ['18.x', '20.x']
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+    runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node_version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node_version }}
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: npm install, build and test
-      run: |
-        npm install
-        npm run build --if-present
-        npm test
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    - name: Run tests with coverage
-      run: npm test
+      - name: Install dependencies
+        run: npm install
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Run tests with coverage
+        run: npm test
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
